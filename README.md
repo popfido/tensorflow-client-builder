@@ -56,7 +56,7 @@ exclude='*' $SRC/tensorflow/tensorflow  $PROJECT_ROOT/src/main/proto/
 
 Now we have a project with only .proto files under `src/main/proto/`. Let's compile them into Java source files.
 
-### Option 1 - build with maven
+### Build with maven
 
 Build can be automated by using maven, the key dependencies declared in pom file are:
 
