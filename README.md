@@ -52,7 +52,7 @@ while still keep the directory structure, which is assumed by the import stateme
 
 Using the rsync commands, we can copy files with particular extension and keep the directory structure.
 
-```
+```bash
 $ export PROJECT_ROOT=$SRC/tensorflow-server-client
 $ rm -rf $PROJECT_ROOT/src/main/proto/
 $ mkdir -p $PROJECT_ROOT/src/main/proto/
@@ -70,7 +70,7 @@ Now we have a project with only .proto files under `src/main/proto/`. Let's comp
 
 Build can be automated by using maven, the key dependencies declared in pom file are:
 
-```
+```xml
     <properties>
         <grpc.version>1.28.0</grpc.version>
         <protobuf.version>3.8.0</protobuf.version>
@@ -98,7 +98,7 @@ Build can be automated by using maven, the key dependencies declared in pom file
 
 Additionally, use the `protobuf-maven-plugin` which will compile .proto files to .java files. It will also generate extra `*Grpc.java` service stub files for each `*_service.proto` files:
 
-```
+```xml
     <build>
         <extensions>
             <extension>
@@ -145,7 +145,7 @@ Notes:
 
 # Sample Java client code to make gRPC calls
 
-```
+```java
     String host = "localhost";
     int port = 8501;
     // the model's name. 
@@ -185,5 +185,5 @@ Notes:
 
 Additional engineering considerations:
 
-- Creating a channel is an expensive operation, should be cached.
+- Creating a channel is an expensive operation, thus a connected channel should be cached.
 - protobuf classes are dumb data holders, used for serialization and communication. You should build separate application specific object models that wraps around these protobuf classes, to provide additional behavior. Don't extend the protobuf classes for this purpose. See [Protobuf Java Tutorial](https://developers.google.com/protocol-buffers/docs/javatutorial).
