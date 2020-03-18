@@ -40,7 +40,14 @@ $ git checkout tags/v$TARGET_RELEASE
 
 ### Gather all the .proto files and organize them into a new Java project.
 
-The libraries we checked out contain many files, but we only need some .proto files in order to compile our gRPC Java client. Let's make a project to host the source .proto files and future .java files.
+The libraries we checked out contain many files, but we only need part of .proto files in order to compile our gRPC Java client. 
+Thus let's make a project to host the source .proto files and future .java files.
+
+```bash
+$ export PROJECT_ROOT=$SRC/tensorflow-server-client
+$ rm -rf $PROJECT_ROOT/src/main/proto
+$ mkdir -p $PROJECT_ROOT/src/main/proto
+```
 
 Our end goal is to get all the .proto files required directly or indirectly by `tensorflow_serving/apis/*_service.proto` files. 
 However, there are no tools that can start with a few .proto files and trace through the import statements and list all other .proto files required. 
@@ -51,9 +58,6 @@ Let's try to pick out only .proto files and put `.proto` files into the new proj
 while still keep the directory structure, which is assumed by the import statements in these .proto files. 
 
 ```bash
-$ export PROJECT_ROOT=$SRC/tensorflow-server-client
-$ rm -rf $PROJECT_ROOT/src/main/proto/
-$ mkdir -p $PROJECT_ROOT/src/main/proto/
 $ rsync -arv  --prune-empty-dirs --include="*/" --include='*.proto' --exclude='*' $SRC/serving/tensorflow_serving  $PROJECT_ROOT/src/main/proto/
 $ rsync -arv  --prune-empty-dirs --include="*/" --include="tensorflow/core/lib/core/*.proto" --include='tensorflow/core/framework/*.proto' --include="tensorflow/core/example/*.proto" --include="tensorflow/core/protobuf/*.proto" --include="tensorflow/stream_executor/*.proto" --exclude='*' $SRC/tensorflow/tensorflow  $PROJECT_ROOT/src/main/proto/
 ```
