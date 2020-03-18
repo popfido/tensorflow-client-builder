@@ -50,8 +50,6 @@ Alternatively one could simply include all .proto files from tensorflow_serving/
 Let's try to pick out only .proto files and put `.proto` files into the new project's directories respectively under `src/main/proto` using the rsync commands, 
 while still keep the directory structure, which is assumed by the import statements in these .proto files. 
 
-Using the rsync commands, we can copy files with particular extension and keep the directory structure.
-
 ```bash
 $ export PROJECT_ROOT=$SRC/tensorflow-server-client
 $ rm -rf $PROJECT_ROOT/src/main/proto/
