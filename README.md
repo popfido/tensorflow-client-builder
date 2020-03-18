@@ -11,14 +11,20 @@ This repository is aiming at giving a step by step introduction on how to genera
 ## Preparation
 
 ### Checkout this repository fron github
+
 Before doing stuffs below to generate your tensorflow client, clone this repository from github to use it
+
 ```bash
 $ git clone --recursive https://github.com/popfido/tensorflow-java-client.git
 $ cd tensorflow-java-client
 $ export SRC=$(pwd)
 ```
 
+**Note**: the original tensorflow repository is quite large, thus time consuming of `--recursive` might be slower than your expectation due to network speed in different area. 
+
 ## Step 1. Get TensorFlow protobuf files
+
+**Note**: Step 1 can be skipped since this repository has contained a version of tensorflow protobuf files with release 1.15.0.
 
 ### Check out the tensorflow projects somewhere
 
@@ -36,14 +42,19 @@ $ git checkout tags/v$TARGET_RELEASE
 
 The libraries we checked out contain many files, but we only need some .proto files in order to compile our gRPC Java client. Let's make a project to host the source .proto files and future .java files.
 
-Our end goal is to get all the .proto files required directly or indirectly by `tensorflow_serving/apis/*_service.proto` files. However, I am not aware of any tools that can start with a few .proto files and trace through the import statements and list all other .proto files required. So figuring out what files are needed is done by trying to compile the resulting Java classes till no 'no class def found' complaints. Alternatively one could simply include all .proto files from tensorflow_serving/ and tensorflow/, but it will result in much bigger Java package.
+Our end goal is to get all the .proto files required directly or indirectly by `tensorflow_serving/apis/*_service.proto` files. 
+However, there are no tools that can start with a few .proto files and trace through the import statements and list all other .proto files required. 
+So figuring out what files are needed is done by trying to compile the resulting Java classes till no 'no class def found' complaints. 
+Alternatively one could simply include all .proto files from tensorflow_serving/ and tensorflow/, but it will result in much bigger Java package.
 
-Let's try to pick out only .proto files, while still keep the directory structure, which is assumed by the import statements in these .proto files. Let's put .proto files into the new project's directories respectively, under `src/main/proto/`:
+Let's try to pick out only .proto files and put `.proto` files into the new project's directories respectively under `src/main/proto` using the rsync commands, 
+while still keep the directory structure, which is assumed by the import statements in these .proto files. 
 
 Using the rsync commands, we can copy files with particular extension and keep the directory structure.
 
 ```
 $ export PROJECT_ROOT=$SRC/tensorflow-server-client
+$ rm -rf $PROJECT_ROOT/src/main/proto/
 $ mkdir -p $PROJECT_ROOT/src/main/proto/
 $ rsync -arv  --prune-empty-dirs --include="*/" --include='*.proto' --exclude='*' $SRC/serving/tensorflow_serving  $PROJECT_ROOT/src/main/proto/
 $ rsync -arv  --prune-empty-dirs --include="*/" --include="tensorflow/core/lib/core/*.proto" --include='tensorflow/core/framework/*.proto' --include="tensorflow/core/example/*.proto" --include="tensorflow/core/protobuf/*.proto" --include="tensorflow/stream_executor/*.proto" --exclude='*' $SRC/tensorflow/tensorflow  $PROJECT_ROOT/src/main/proto/
