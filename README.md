@@ -115,11 +115,15 @@ Additionally, use the `protobuf-maven-plugin` which will compile .proto files to
                     <protocArtifact>com.google.protobuf:protoc:${protobuf.version}:exe:${os.detected.classifier}</protocArtifact>
                     <pluginId>grpc-java</pluginId>
                     <pluginArtifact>io.grpc:protoc-gen-grpc-java:${grpc.version}:exe:${os.detected.classifier}</pluginArtifact>
+                    <outputDirectory>${basedir}/src/main/java</outputDirectory>
+                    <clearOutputDirectory>true</clearOutputDirectory>
                 </configuration>
             </plugin>
         </plugins>
     </build>
 ```
+
+Noted that the output directory has been set as `{project_base_dir}/src/main/java`. Thus after executing list of goals above, you shall find the compiled `.java` file inside `src/main/java`.
 
 Here is the [documentation of this plugin](https://www.xolstice.org/protobuf-maven-plugin/), including the list of goals available. You can see it can compile the .proto files to **Java**, **C++**, **C#**, **Javascript**, or **Python**.
 
