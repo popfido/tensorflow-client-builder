@@ -63,6 +63,7 @@ Build can be automated by using maven, the key dependencies declared in pom file
 ```
     <properties>
         <grpc.version>1.28.0</grpc.version>
+        <protobuf.version>3.8.0</protobuf.version>
     </properties>
     
     <dependencies>
