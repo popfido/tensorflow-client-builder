@@ -46,8 +46,7 @@ Using the rsync commands, we can copy files with particular extension and keep t
 $ export PROJECT_ROOT=$SRC/tensorflow-server-client
 $ mkdir -p $PROJECT_ROOT/src/main/proto/
 $ rsync -arv  --prune-empty-dirs --include="*/" --include='*.proto' --exclude='*' $SRC/serving/tensorflow_serving  $PROJECT_ROOT/src/main/proto/
-$ rsync -arv  --prune-empty-dirs --include="*/" --include="tensorflow/core/lib/core/*.proto" --include='tensorflow/core/framework/*.proto' --include="tensorflow/core/example/*.proto" --include="tensorflow/core/protobuf/*.proto" --include="tensorflow/stream_executor/*.proto" --
-exclude='*' $SRC/tensorflow/tensorflow  $PROJECT_ROOT/src/main/proto/
+$ rsync -arv  --prune-empty-dirs --include="*/" --include="tensorflow/core/lib/core/*.proto" --include='tensorflow/core/framework/*.proto' --include="tensorflow/core/example/*.proto" --include="tensorflow/core/protobuf/*.proto" --include="tensorflow/stream_executor/*.proto" --exclude='*' $SRC/tensorflow/tensorflow  $PROJECT_ROOT/src/main/proto/
 ```
 
 **Note**: The .proto files in these directories can change between releases, new files can be added, and file content can also change. So it is possible that the above 5 directories will contain .proto files that require other .proto files from directories outside. This repository is currently only tested under Tensorflow 1.15.0. So in case of that situation comes, you shall expand the .proto files to include those .proto files needed. But future test under other releases will be done.
