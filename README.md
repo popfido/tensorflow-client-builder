@@ -20,6 +20,17 @@ $ cd tensorflow-java-client
 $ export SRC=$(pwd)
 ```
 
+Following Steps will help you understand how to generate target platform codes. But if you don't care about details, just execute:
+
+```bash
+$ cd $SRC
+$ sh build.sh
+```
+
+Then target java serving codes will be generated under path `tensorflow-server-client/src/main/java` with version 1.15.0.
+
+If you wanna generate codes of other release version, execute `sh build.sh -h` for detailed options.
+
 **Note**: the original tensorflow repository is quite large, thus time consuming of `--recursive` might be slower than your expectation due to network speed in different area. 
 
 ## Step 1. Get TensorFlow protobuf files
