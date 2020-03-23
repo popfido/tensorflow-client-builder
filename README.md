@@ -15,8 +15,8 @@ This repository is aiming at giving a step by step introduction on how to genera
 Before doing stuffs below to generate your tensorflow client, clone this repository from github to use it
 
 ```bash
-$ git clone --recursive https://github.com/popfido/tensorflow-java-client.git
-$ cd tensorflow-java-client
+$ git clone --recursive https://github.com/popfido/tensorflow-client-builder.git
+$ cd tensorflow-client-builder
 $ export SRC=$(pwd)
 ```
 
